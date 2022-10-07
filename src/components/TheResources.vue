@@ -1,0 +1,71 @@
+<template>
+  <div>
+    <base-card>
+      <base-button
+        @click="setSelectedTab('stored-resources')"
+        :mode="storedResButtonMode"
+        >Uložené</base-button
+      >
+      <base-button
+        @click="setSelectedTab('add-resource')"
+        :mode="addResButtonMode"
+        >Pridať údaj</base-button
+      >
+    </base-card>
+    <component :is="selectedTab"></component>
+  </div>
+</template>
+
+<script>
+import StoredResources from './StoredResources.vue';
+import AddResource from './AddResource.vue';
+
+export default {
+  components: { StoredResources, AddResource },
+  data() {
+    return {
+      selectedTab: 'stored-resources',
+      storedResources: [
+        {
+          id: 'official-guide',
+          title: 'Official Guide',
+          description: 'The official Vue.js documentation',
+          link: 'https://vuejs.org',
+        },
+        {
+          id: 'google',
+          title: 'Google',
+          description: ' Uč sa s Googlom',
+          link: 'https://google.org',
+        },
+        {
+          id: 'google',
+          title: 'Google',
+          description: ' Uč sa s Googlom',
+          link: 'https://google.org',
+        },
+      ],
+    };
+  },
+  provide() {
+    return {
+      resources: this.storedResources,
+    };
+  },
+  computed: {
+    storedResButtonMode() {
+      return this.selectedTab === 'stored-resources' ? null : 'flat';
+    },
+    addResButtonMode() {
+      return this.selectedTab === 'add-resource' ? null : 'flat';
+    },
+  },
+  methods: {
+    setSelectedTab(tab) {
+      this.selectedTab = tab;
+    },
+  },
+};
+</script>
+
+<style scoped></style>
