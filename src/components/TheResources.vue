@@ -28,21 +28,9 @@ export default {
       storedResources: [
         {
           id: 'official-guide',
-          title: 'Official Guide',
-          description: 'The official Vue.js documentation',
+          title: 'Skúšobný nadpis',
+          description: 'Oficialna Vue.js stránka',
           link: 'https://vuejs.org',
-        },
-        {
-          id: 'google',
-          title: 'Google',
-          description: ' Uč sa s Googlom',
-          link: 'https://google.org',
-        },
-        {
-          id: 'google',
-          title: 'Google',
-          description: ' Uč sa s Googlom',
-          link: 'https://google.org',
         },
       ],
     };
@@ -51,6 +39,7 @@ export default {
     return {
       resources: this.storedResources,
       addResource: this.addResource,
+      deleteResource: this.removeResource,
     };
   },
   computed: {
@@ -74,6 +63,10 @@ export default {
       };
       this.storedResources.unshift(newResource);
       this.selectTab = 'stored-resources';
+    },
+    removeResource(resId) {
+      const resIndex = this.storedResources.findIndex(res => res.id === resId);
+      this.storedResources.splice(resIndex, 1);
     },
   },
 };

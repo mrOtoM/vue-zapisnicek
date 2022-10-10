@@ -1,5 +1,5 @@
 <template>
-  <the-header title="Zapametaj si!"></the-header>
+  <the-header title="Zápisníček"></the-header>
   <the-resources></the-resources>
 </template>
 

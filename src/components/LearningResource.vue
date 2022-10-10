@@ -3,11 +3,13 @@
     <base-card>
       <header>
         <h2>{{ title }}</h2>
-        <base-button mode="flat">Odstraniť</base-button>
+        <base-button mode="flat" @click="deleteResource(id)"
+          >Odstraniť</base-button
+        >
       </header>
       <p>{{ description }}</p>
       <nav>
-        <a :href="link">View Resource</a>
+        <a :href="link">Prejsť na zdroj</a>
       </nav>
     </base-card>
   </li>
@@ -17,7 +19,8 @@
 import BaseCard from './UI/BaseCard.vue';
 export default {
   components: { BaseCard },
-  props: ['title', 'description', 'link'],
+  props: ['id', 'title', 'description', 'link'],
+  inject: ['deleteResource'],
 };
 </script>
 
