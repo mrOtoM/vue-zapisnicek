@@ -1,9 +1,23 @@
 <template>
+  <base-dialog
+    v-if="inputIsInvalid"
+    title="Invalid Input"
+    @close="confirmError"
+  >
+    <template v-slot:default>
+      <p>Bohužial, minimálne jeden z údajov nieje spávny</p>
+      <br />
+      <p>Prosim, prekontrolujte si vložené údaje</p>
+    </template>
+    <template v-slot:actions>
+      <base-button @click="confirmError">Okay</base-button>
+    </template>
+  </base-dialog>
   <base-card>
-    <form>
+    <form @submit.prevent="submitData">
       <div class="form-control">
         <label for="title">Názov</label>
-        <input type="text" name="title" id="title" />
+        <input type="text" name="title" id="title" ref="titleInput" />
       </div>
       <div class="form-control">
         <label for="title">Opis</label>
@@ -12,11 +26,12 @@
           id="descritpiton"
           cols="30"
           rows="10"
+          ref="descInput"
         ></textarea>
       </div>
       <div class="form-control">
         <label for="link">Link</label>
-        <input type="url" name="link" id="link" />
+        <input type="url" name="link" id="link" ref="linkInput" />
       </div>
       <div>
         <base-button type="submit">Potvrdiť</base-button>
@@ -26,7 +41,34 @@
 </template>
 
 <script>
-export default {};
+export default {
+  inject: ['addResource'],
+  data() {
+    return {
+      inputIsInvalid: false,
+    };
+  },
+  methods: {
+    submitData() {
+      const enteredTitle = this.$refs.titleInput.value;
+      const enteredDescription = this.$refs.descInput.value;
+      const enteredLink = this.$refs.linkInput.value;
+
+      if (
+        enteredTitle.trim() === '' ||
+        enteredDescription.trim() === '' ||
+        enteredLink.trim() === ''
+      ) {
+        this.inputIsInvalid = true;
+        return;
+      }
+      this.addResource(enteredTitle, enteredDescription, enteredLink);
+    },
+    confirmError() {
+      this.inputIsInvalid = false;
+    },
+  },
+};
 </script>
 
 <style scoped>
